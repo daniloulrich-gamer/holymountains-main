@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVIDIA quantitativa</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+
+        <nav>
+
+            <a href="index.html" id="PI">Página inicial</a>
+
+        </nav>
+
+        <h1 class="João">Ferramentas da NVIDIA para mercado financeiro</h1>
+        <h2 class="Mombach">Como maximizar machine learning e coleta de dados usando a GPU</h2>
+        <data value="09/11/2026">09/11/2026</data>
+
+    </header>
+
+    <br> <br> <br>
+
+<div class="Pedro">
+  <div class="Ferreira">
+    <h2>Introdução</h2>
+
+        <p id="Renan">A NVIDIA (NVDA) se consolidou como a principal infraestrutura computacional da análise quantitativa moderna no mercado financeiro. 
+        A capacidade de suas unidades de processamento gráfico (GPUs) acelerou drasticamente a execução de modelos matemáticos complexos, 
+        o treinamento de algoritmos de inteligência artificial e o processamento de grandes volumes de dados em tempo real.</p>
+
+  </div>
+  
+  <img src="Imagens/nvidia-logo-horiz-wht-16x9-content-large.jpeg" alt="ABC" class="Ferreira">
+</div> 
+
+<br> <br> <br> <br> <br>
+
+    <main>
+
+        <section>
+            <div class="grid-container">
+                <div class="grid-item">
+                    <h4>cuRAND</h4>
+                    <p>Números aleatórios na GPU para simulações de Monte Carlo e precificação.</p>
+                </div>
+                <div class="grid-item">
+                    <h4>RAPIDS</h4>
+                    <p>cuDF, cuML e Numba: dados, estatística e cenários em GPU.</p>
+                </div>
+                <div class="grid-item">
+                    <h4>cuOpt</h4>
+                    <p>Otimização de portfólio em menos de 1 segundo.</p>
+                </div>
+                <div class="grid-item">
+                    <h4>TensorRT e Triton</h4>
+                    <p>Inferência de modelos de IA com baixa latência.</p>
+                </div>
+            </div>
+        </section>
+
+        <br>
+
+        <section>
+            <p class="Anderson">Em finanças quantitativas, a CPU vira gargalo em três situações:</p>
+
+            <ol>
+                <li>álgebra matricial de alta dimensão</li>
+                <li>simulação estocástica</li>
+                <li>reotimização contínua de portfólio com restrição de latência</li>
+            </ol>
+
+            <p class="Anderson">O ecossistema CUDA-X da NVIDIA cobre isso em camadas: simulação e precificação, dados,
+                otimização, inferência e hardware.</p>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Simulação e precificação</h3>
+
+                        <p class="Anderson">cuRAND gera números aleatórios na GPU e sustenta as simulações de Monte
+                            Carlo para
+                            derivativos (Black-Scholes, Heston, opções asiáticas) e o cálculo de gregas em carteiras
+                            grandes.
+                            Oferece geradores pseudo-aleatórios e quase-aleatórios (Sobol). Os quase-aleatórios
+                            convergem mais
+                            rápido em opções exóticas, com menos simulações para a mesma precisão.
+                            Pode ser chamado em lote pelo host ou dentro do próprio kernel, sem passar pela memória
+                            global.
+                        </p>
+
+                        <p class="Anderson"><strong>Código legado (ex.: QuantLib).</strong> Há dois caminhos: reescrever
+                            os motores
+                            de precificação em CUDA C++, ou usar OpenACC para paralelizar loops do C++ existente sem
+                            reescrita
+                            completa. Agrupar muitas opções em um único lote satura a GPU. A NVIDIA cita ganhos acima de
+                            8x frente
+                            a CPU multi-thread.</p>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Dados: RAPIDS</h3>
+                        <ul>
+                            <li><strong>cuDF</strong> e <strong>Dask-cuDF:</strong>: o cuDF analisa DataFrame em GPU com
+                                API próxima à do pandas (joins, filtros,
+                                agregações, janelas móveis).
+                                Também serve de motor GPU para o Polars. Já o Dask-cuDF escala o cuDF para multi-GPU e
+                                multi-nó quando o dado não cabe em uma GPU.</li>
+                            <li><strong>cuML:</strong> ML e estatística em GPU. O uso central aqui é a Estimativa de
+                                Densidade por
+                                Kernel (KDE). Ela aprende a distribuição conjunta dos retornos sem assumir normalidade e
+                                gera
+                                cenários, por exemplo 20 mil para o S&amp;P 500. A NVIDIA reporta até 100x frente a CPU
+                                multi-core.</li>
+                            <li><strong>Numba:</strong> compila funções Python em kernels CUDA, para indicadores
+                                proprietários
+                                (RSI, EMA, estimadores de volatilidade).</li>
+                        </ul>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Otimização de portfólio: cuOpt</h3>
+                        <p class="Anderson">Markowitz usa a variância como medida de risco. Ela é simétrica e lida mal
+                            com caudas
+                            pesadas. A gestão institucional migrou para o CVaR (Expected Shortfall), a perda média
+                            esperada além
+                            de um nível de confiança. Com cenários, o problema Média-CVaR vira um programa linear. Com
+                            milhares de
+                            ativos e dezenas de milhares de cenários, ele passa de 10 milhões de entradas não nulas. Em
+                            CPU isso
+                            costuma virar processamento noturno.</p>
+                        <p class="Anderson">O cuOpt resolve LP e MILP em GPU, principalmente com PDLP (um método de
+                            gradiente
+                            primal-dual, fácil de paralelizar). Também pode rodar barreira e simplex dual em paralelo e
+                            ficar com
+                            o primeiro que convergir. Acoplado ao cuML, a NVIDIA reporta até 160x frente a solvers de
+                            CPU open
+                            source, com soluções em menos de 1 segundo. Isso viabiliza:</p>
+                        <ul>
+                            <li><strong>Rebalanceamento por desvio:</strong> dispara quando os pesos se afastam do alvo,
+                                em vez de
+                                seguir calendário fixo.</li>
+                            <li><strong>Fronteira eficiente em tempo real:</strong> permite ajustar parâmetros durante o
+                                pregão.
+                            </li>
+                        </ul>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Inferência de IA e baixa latência</h3>
+                        <ul>
+                            <li><strong>TensorRT:</strong> converte modelos PyTorch/TensorFlow em engines otimizados
+                                para a GPU
+                                alvo, via fusão de camadas, quantização (FP16, INT8, FP8, NVFP4) e CUDA graphs. O
+                                material cita
+                                redução de latência de 2x a 5x, com perda pequena de precisão.</li>
+                            <li><strong>TensorRT-LLM:</strong> versão para LLMs (sentimento, earnings calls), com paged
+                                attention
+                                e paralelismo de tensores multi-GPU.</li>
+                            <li><strong>Triton Inference Server:</strong> serve os modelos em produção, com dynamic
+                                batching,
+                                in-flight batching e execução concorrente de modelos heterogêneos na mesma GPU (ex.: GNN
+                                de risco
+                                de contraparte junto com um Transformer de fluxo de ordens).</li>
+                            <li><strong>NeMo Curator:</strong> cura dados de texto financeiro (SEC, notícias,
+                                analistas), com
+                                deduplicação semântica em GPU, para fine-tuning de LLMs.</li>
+                        </ul>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Hardware e capacitação</h3>
+                        <ul>
+                            <li><strong>Superchips Grace Hopper/Grace Blackwell:</strong> CPU Arm e GPU ligadas por
+                                NVLink-C2C
+                                (900 GB/s). A GPU acessa a memória da CPU diretamente, o que ajuda com históricos
+                                grandes de order
+                                book e evita o gargalo do PCIe.</li>
+                            <li><strong>Cluster:</strong> InfiniBand ou Spectrum-X com RDMA, para baixa latência entre
+                                nós.</li>
+                            <li><strong>NVIDIA DLI:</strong> cursos de CUDA, RAPIDS, TensorRT e Triton.</li>
+                        </ul>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="grid-containerdois">
+                <div class="grid-itemdois">
+                    <p>
+                    <article>
+                        <h3>Pipeline integrado</h3>
+                        <ol>
+                            <li><strong>Ingestão e features:</strong> cuDF + Numba geram indicadores e variáveis em
+                                tempo real.
+                            </li>
+                            <li><strong>Distribuição e cenários:</strong> cuML (KDE) + cuRAND geram dezenas de milhares
+                                de
+                                cenários.</li>
+                            <li><strong>Otimização:</strong> cuOpt (Média-CVaR) calcula os pesos ótimos em menos de 1
+                                segundo.</li>
+                            <li><strong>Sinais e execução:</strong> TensorRT + Triton entregam previsões em
+                                microssegundos para os
+                                algoritmos de execução.</li>
+                        </ol>
+                        <p class="Anderson">O ganho prático é sair do risco em lote pós-mercado para decisão
+                            intradiária, com
+                            gestão dinâmica do risco de cauda.</p>
+                    </article>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <br> <br>
+
+    <footer>
+
+        <p>Instituto Federal do Paraná. Campus Capanema</p>
+
+    </footer>
+
+</body>
+
+</html>

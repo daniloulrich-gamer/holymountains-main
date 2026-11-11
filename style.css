@@ -1,0 +1,271 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: rgb(39, 48, 42);
+    color: #e0e0e0;
+    margin: 0;
+    padding: 0 20px;
+}
+
+/* INTRODUÇÃO */
+header {
+    text-align: center;
+    padding: 40px 0 20px 0;
+}
+
+#PI {
+    font-size: 20px;
+    font-family: Arial, sans-serif;
+    color: #76b900;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.João {
+    font-size: 52px;
+    font-weight: bold;
+    font-family: 'Arial Black', sans-serif;
+    background-image: url('Imagens/photo-1615715326073-ade39638a8b5.jpg');
+    background-size: cover;
+    background-position: center;
+    -webkit-background-clip: text; 
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    margin: 20px 0 10px 0;
+}
+
+.Mombach {
+    font-size: 26px;
+    font-family: Arial, sans-serif;
+    color: #a0a0a0;
+    margin-top: 0;
+}
+
+data {
+    color: #777;
+    font-size: 14px;
+}
+
+nav {
+    text-align: right;
+}
+
+.Pedro {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #141815;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    gap: 30px;
+    border: 1px solid #2e3831;
+}
+
+@media (min-width: 768px) {
+    .Pedro {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+}
+
+div.Ferreira {
+    flex: 1;
+}
+
+img.Ferreira {
+    width: 100%;
+    max-width: 350px;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+}
+
+h2 {
+    font-size: 32px;
+    color: #76b900;
+    padding: 0;
+    margin-top: 0;
+} 
+
+#Renan {
+    font-size: 17px;
+    color: #cccccc; 
+    line-height: 1.6;
+    text-align: justify; 
+    margin: 0;
+}
+
+/* MUCHO TEXTO */
+main {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+section {
+    margin-bottom: 40px;
+}
+
+h3 {
+    font-size: 26px;
+    color: #76b900;
+    padding: 0;
+    margin-bottom: 15px;
+} 
+
+.Anderson {
+    font-size: 17px;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #dddddd;
+}
+
+ul, ol {
+    font-size: 17px;
+    font-family: Arial, sans-serif;
+    padding: 0 0 0 25px;
+    color: #dddddd;
+    line-height: 1.6;
+}
+
+li {
+    margin-bottom: 8px;
+}
+
+/* GRID 1 */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.grid-item {
+    display: flex;
+    flex-direction: column;  
+    justify-content: center; 
+    align-items: center;   
+    border: 1px solid #2e3831;
+    border-top: 4px solid #76b900;
+    padding: 20px;
+    background-color: #141815;
+    color: #fff;
+    border-radius: 8px;
+    min-height: 120px;
+}
+
+.grid-item h4 {
+    font-size: 20px;
+    color: #76b900;
+    margin: 0 0 10px 0;
+}
+
+.grid-item p {
+    text-align: center;
+    margin: 0;
+    color: #cccccc;
+}
+
+/* GRID 2 */
+.grid-containerdois {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));    
+    gap: 20px;
+}
+
+.grid-itemdois {
+    display: flex;
+    flex-direction: column;  
+    justify-content: flex-start; 
+    padding: 25px;
+    background-color: #141815;
+    color: #e0e0e0;
+    border-radius: 8px;
+    border: 1px solid #2e3831;
+    border-left: 5px solid #76b900;
+}
+
+/* MEDIA QUERIES */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr; 
+        gap: 15px; 
+    }
+
+    .grid-item {
+        min-height: 120px;
+        padding: 15px;
+    }
+    
+    .João {
+        font-size: 2.5rem; 
+        text-align: center;
+    }
+
+    .Mombach {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    #PI {
+        font-size: 1.3rem;
+    }
+
+    h3 {
+        font-size: 22px;
+    }
+
+    .Anderson, ul, ol {
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 540px) {
+    .grid-container {
+        gap: 10px; 
+        padding: 0; 
+    }
+
+    .grid-item {
+        min-height: auto; 
+        padding: 12px; 
+        word-break: break-word; 
+    }
+    
+    .João {
+        font-size: 2rem;
+        line-height: 1.3;
+    }
+
+    .Mombach {
+        font-size: 1.2rem;
+    }
+
+    #PI {
+        font-size: 1.1rem;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    .Anderson, ul, ol {
+        font-size: 15px;
+    }
+}
+
+/* RODAPÉ */
+footer {
+    text-align: center;
+    padding: 30px;
+    color: #888;
+    font-weight: bold;
+    border-top: 1px solid #2e3831;
+    margin-top: 40px;
+}
